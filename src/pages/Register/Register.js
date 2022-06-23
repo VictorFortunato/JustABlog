@@ -12,32 +12,31 @@ const Register = () => {
   const[error, setError] = useState("");
 
   //renaming the errors that comes from useAuthentication to not mix with backend errors
+  const { createUser, error: authError, loading } = useAuthentication();
 
-  const {createUser, error : authError , loading} = useAuthentication();
-
-  //Send Form
-  const handleSubmit = async (e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
 
-    const user ={
+    setError("");
+
+    const user = {
       displayName,
       email,
-      password
+      password,
     };
 
-    if(password !== confirmPassword){
-      setError('Password needs to be equal!');
+    if (password !== confirmPassword) {
+      setError("Password needs to be equal!");
       return;
     }
-    const res = await createUser (user);
+
+    const res = await createUser(user);
 
     console.log(res);
   };
-  //mapping if setError Changes
 
-  useEffect(()=>{
-    if (authError){
+  useEffect(() => {
+    if (authError) {
       setError(authError);
     }
   }, [authError]);
@@ -94,4 +93,4 @@ const Register = () => {
   );
 }
 
-export default Register
+export default Register;
